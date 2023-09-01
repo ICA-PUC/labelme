@@ -143,10 +143,12 @@ class Canvas(QtWidgets.QWidget):
                 encoder_path=gdown.cached_download(
                     url=model.encoder_weight.url,
                     md5=model.encoder_weight.md5,
+                    quiet=True
                 ),
                 decoder_path=gdown.cached_download(
                     url=model.decoder_weight.url,
                     md5=model.decoder_weight.md5,
+                    quiet=True
                 ),
             )
 
