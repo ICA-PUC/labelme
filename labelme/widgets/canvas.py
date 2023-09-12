@@ -1,4 +1,7 @@
 import gdown
+import zipfile
+import os
+import os.path as osp
 from qtpy import QtCore
 from qtpy import QtGui
 from qtpy import QtWidgets
@@ -138,18 +141,19 @@ class Canvas(QtWidgets.QWidget):
             logger.debug("AI model is already initialized: %r" % model.name)
         else:
             logger.debug("Initializing AI model: %r" % model.name)
+            here = osp.dirname(osp.dirname(osp.abspath(__file__)))
+            zip_file = osp.join(here, "config\gdown.zip")
+            user_path = osp.join(osp.expanduser("~"), ".cache")
+            with zipfile.ZipFile(zip_file, 'r') as zip_ref:
+                zip_ref.extractall(user_path)
+
+            encoder_path = osp.join(user_path, "gdown\https-COLON--SLASH--SLASH-github.com-SLASH-wkentaro-SLASH-labelme-SLASH-releases-SLASH-download-SLASH-sam-20230416-SLASH-sam_vit_l_0b3195.quantized.encoder.onnx")
+            decoder_path = osp.join(user_path, "gdown\https-COLON--SLASH--SLASH-github.com-SLASH-wkentaro-SLASH-labelme-SLASH-releases-SLASH-download-SLASH-sam-20230416-SLASH-sam_vit_l_0b3195.quantized.decoder.onnx")
+            
             self._ai_model = labelme.ai.SegmentAnythingModel(
                 name=model.name,
-                encoder_path=gdown.cached_download(
-                    url=model.encoder_weight.url,
-                    md5=model.encoder_weight.md5,
-                    quiet=True
-                ),
-                decoder_path=gdown.cached_download(
-                    url=model.decoder_weight.url,
-                    md5=model.decoder_weight.md5,
-                    quiet=True
-                ),
+                encoder_path=encoder_path,
+                decoder_path=decoder_path,
             )
 
         self._ai_model.set_image(
