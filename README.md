@@ -1,3 +1,8 @@
+Arquivo gdown.zip deeve ser colocado dentro da pasta labelme//config antes de gerar o executável.
+Arquivo: [linkk]((https://drive.google.com/drive/folders/1OTlTQxzBmI0l7eXt-9TeXZNFNp3KeVAa?usp=drive_link)
+Obs: mudança para que exe não precise de conexão com a internet, já que o exe será usado na embarcação!
+
+
 <h1 align="center">
   <img src="labelme/icons/icon.png"><br/>labelme
 </h1>
